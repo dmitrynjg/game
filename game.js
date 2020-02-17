@@ -65,8 +65,8 @@ class Character {
 
 var Player = new Character();
 var enemyLevel = [];
-Player.xPos = 470;
-Player.yPos = 85;
+Player.xPos = 180;
+Player.yPos = 0;
 function addEnemyLevelOnLevel(xPos, yPos) {
   var enemy = new Character();
   enemy.xPos = xPos;
@@ -83,8 +83,8 @@ function addEnemyLevelOnLevel(xPos, yPos) {
      //Патрулирование ai
     if(!this.playerFound){
     for (let i = 0; i < map.length; i++) {
-      if ((this.xPos >= map[i].x + map[i].width - this.sizeX || this.xPos <= map[i].x + this.sizeX) ) {
-        if (map[i].typeTexture === 0) {
+      if (map[i].typeTexture === 0) {
+      if ((this.xPos >= map[i].x + map[i].width - this.sizeX || this.xPos <= map[i].x ) ) {
           if (this.speed < 0) {
             this.rowPlayerSprite = 11;
           }
@@ -98,7 +98,7 @@ function addEnemyLevelOnLevel(xPos, yPos) {
       this.xPos += this.speed;
       }
        //Обнаружение ai героя
-      if(Math.abs(Player.xPos - this.xPos) < 100 && this.yPos === Player.yPos){
+      if(Math.abs(Player.xPos - this.xPos) < 100 && Math.abs(Player.yPos - this.yPos) < 40){
         this.playerFound = true;
         if(this.xPos !== Player.xPos){
           if(this.xPos > Player.xPos){
@@ -111,6 +111,9 @@ function addEnemyLevelOnLevel(xPos, yPos) {
           }
         }
         else{
+          if(this.yPos > Player.yPos){
+            this.yPos -= 3;
+          }
           this.xPos -= 0;
         }
       }
